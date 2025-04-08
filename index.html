@@ -50,8 +50,22 @@
 </body>
 </html>
 <script>
-  document.getElementById('incomeForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    window.location.href = 'add-expense.html';
-  });
+    // Create FormData to send
+    function makeRequest() {
+      const FormData = new FormData();
+      formData.append('IncomeSourceName', ISN);
+      formData.append('Amount', Amount);
+      formData.append('Frequency', Frequency);
+      let URL = "https://webhook-test.com/e196683cab5e7cb5c7cf4810e4247b95";
+      
+      // Send it via fetch to your webhook
+      fetch(URL, {method: "POST", body: FormData})
+        .then(statusCheck)
+        .then(resp => resp.json())
+        .then(updateResults)
+        .catch(handleError);
+    }
+    makeRequest();
 </script>
+
+
